@@ -15,14 +15,22 @@ program
 
 program.parse(process.argv);
 
+// defaults
+dirValue = dirValue || __dirname;
+program.port = program.port || 2323;
+
 if (typeof cmdValue == 'undefined') {
-	console.error('no command given! use --help for more information');
+	console.error('No command given! Use --help for more information');
 	process.exit(1);
 }
 
-// default to current directory
-dirValue = dirValue || __dirname;
-
-console.log('command: ' + cmdValue);
-console.log(dirValue);
-
+// commands
+if (cmdValue == 'start') {
+	// get ip address
+	require('dns').lookup(require('os').hostname(), function (err, add, fam) {
+		console.log('Running on '+add + ':' + program.port);
+	});
+}
+else {
+	console.error('Command \'' + cmdValue + '\' not recognized. Use --help for more information');
+}
