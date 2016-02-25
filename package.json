@@ -1,0 +1,22 @@
+{
+  "name": "carboncopy",
+  "version": "0.1.0",
+  "description": "Command-line tool for syncing files over WiFi",
+  "main": "index.js",
+  "scripts": {
+    "test": "NODE_ENV=test node_modules/.bin/mocha --reporter spec test/**",
+    "run": "node index.js"
+  },
+  "author": "Nick Aversano, Zachary Cawthorne",
+  "license": "MIT",
+  "bin": {
+    "carbon": "./index.js"
+  },
+  "dependencies": {
+    "chokidar": "^1.4.2",
+    "commander": "^2.9.0"
+  },
+  "devDependencies": {
+    "mocha": "^2.4.5"
+  }
+}
