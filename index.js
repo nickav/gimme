@@ -44,7 +44,8 @@ program
 program
 	.command('*')
 	.action(function(cmd) {
-		console.log(colors.red('Command `' + cmd + '` not found.') + ' Use --help for more information');
+		console.log(colors.red('Command `' + cmd + '` not found.'));
+		program.outputHelp();
 	});
 
 if (!process.argv.slice(2).length) {
@@ -52,7 +53,7 @@ if (!process.argv.slice(2).length) {
 }
 
 function make_red(txt) {
-	return colors.red(txt); //display the help text in red on the console
+	return colors.red(txt);
 }
 
 program.parse(process.argv);
