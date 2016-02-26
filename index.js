@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 var program = require('commander');
 var colors = require('colors');
+var app = require('./lib/index.js');
 
 program
 	.version('0.1.0')
@@ -17,10 +18,7 @@ program
 		dir = dir || __dirname;
 		var port = options.port || 2323;
 
-		// get ip address
-		require('dns').lookup(require('os').hostname(), function (err, add, fam) {
-			console.log('Running on '+add + ':' + port);
-		});
+		app.initServer('localhost', port, dir);
 	});
 
 program
@@ -38,7 +36,7 @@ program
 			port = parseInt(parts[1]);
 		}
 
-		console.log('Connecting to ' + add + ':' + port)
+		app.initClient(add, port, dir);
 	});	
 
 program
