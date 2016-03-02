@@ -8,15 +8,16 @@ var mkdirp = require('mkdirp');
 const ENV_PREFIX = __dirname + '/../tmp';
 module.exports = {
 	/**
-	 * Builds a directory for testing where env the environment name and files is a map of filename => content.
-	 * All files are created inside the directory env.
+	 * Builds an env directory for testing where env the environment name
+     * and files is a map of filename => content.
 	 * @return the path to env
 	 *     env.create('1', {'file.txt': 'hello', 'folder/file.txt': 'hi'});
 	 */
 	create: function(env, files) {
-		var prefix = path.resolve(ENV_PREFIX + '/' + env + '/');
+		var prefix = path.resolve(ENV_PREFIX + '/' + env);
+		mkdirp.sync(prefix);
 		for (var name in files) {
-			var file = prefix + name;
+			var file = prefix + '/' + name;
 			writeFileSync(file, files[name]);
 		}
 
@@ -24,7 +25,7 @@ module.exports = {
 	},
 	/** Recursively removes the test folder. Use with after or afterEach */
 	destroy: function() {
-		rimraf.sync(ENV_PREFIX);
+		rimraf.sync(path.resolve(ENV_PREFIX));
 	},
 }
 
