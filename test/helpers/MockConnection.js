@@ -2,6 +2,7 @@ var EventEmitter = require('events');
 var util   = require('util');
 /**
  * Simple Mock Connection between a server and client(s).
+ * Calls to server.write(data) are sent to client.on('data', data) and vice-versa.
  *
  * Usage:
  *    var server = new MockConnection.Server();
