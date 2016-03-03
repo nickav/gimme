@@ -16,6 +16,7 @@
     "chokidar": "^1.4.2",
     "colors": "^1.1.2",
     "commander": "^2.9.0",
+    "jsdiff": "^1.1.1",
     "mkdirp": "^0.5.1"
   },
   "devDependencies": {
