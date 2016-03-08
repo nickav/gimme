@@ -24,7 +24,7 @@ program
 program
   .command('connect <address> [directory]')
   .alias('c')
-  .description('Connect to an existing server')
+  .description('Connect to an existing server. <address> can be a full ip address or the last number over WiFi')
   .action(function(add, dir, options){
     dir = dir || '.';
     var port = options.port || 2323;
