@@ -40,16 +40,21 @@ describe('carbon should', function() {
     helpers.after(carbon[1], 'processRequest', done)
   });
 
-  it('preserve merge conflicts', function(done) {
-    var expected = 'hello world\n\nhi'
-    var carbon = helpers.build({'test': 'hello world\n\ntest'}, {'test': expected})
+  it('merge the changes', function(done) {
+    var original = 'a\nb\nc\nd'
+    var carbon = helpers.build({'test': original}, {'test': original})
+    fs.writeFile(carbon[0].directory + '/test', 'hi\nb\nc\nd');
+    fs.writeFile(carbon[1].directory + '/test', 'a\nb\nc\nhello');
+    var expected = 'hi\nb\nc\nhello';
 
     helpers.after(carbon[1], 'processRequest', function() {
-      var contents = fs.readFileSync(this.directory + '/test')
+      var contents = fs.readFileSync(this.directory + '/test').toString()
       assert.equal(contents, expected)
       done() 
     })
   })
+
+  it('resolve merge conflicts', function() {});
 
   afterEach(env.destroy);
 });

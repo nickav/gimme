@@ -15,10 +15,10 @@ program
   .alias('s')
   .description('Start a server to sync files in the directory (default: current directory)')
   .action(function(dir, options) {
-    dir = dir || __dirname;
+    dir = dir || '.';
     var port = options.port || 2323;
 
-    app.initServer('localhost', port, dir);
+    app.initServer('0.0.0.0', port, dir);
   });
 
 program
@@ -26,14 +26,14 @@ program
   .alias('c')
   .description('Connect to an existing server')
   .action(function(add, dir, options){
-    dir = dir || __dirname;
+    dir = dir || '.';
     var port = options.port || 2323;
 
     // try to get port from address
     if (add.indexOf(':') > -1) {
       var parts = add.split(':');
-      add = parts[0];
-      port = parseInt(parts[1]);
+      port = parseInt(parts.pop());
+      add = parts.join(':');
     }
 
     app.initClient(add, port, dir);
