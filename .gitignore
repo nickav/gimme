@@ -5,3 +5,4 @@ npm-debug.log
 # tmp files
 *.swp
 .DS_Store
+tmp/
