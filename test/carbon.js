@@ -37,24 +37,26 @@ describe('carbon should', function() {
       throw new Error('Sender should not write over its own file.');
     };
 
-    helpers.after(carbon[1], 'processRequest', done)
+    helpers.after(carbon[1], 'processRequest', done);
   });
 
   it('merge the changes', function(done) {
     var original = 'a\nb\nc\nd'
     var carbon = helpers.build({'test': original}, {'test': original})
-    fs.writeFile(carbon[0].directory + '/test', 'hi\nb\nc\nd');
-    fs.writeFile(carbon[1].directory + '/test', 'a\nb\nc\nhello');
-    var expected = 'hi\nb\nc\nhello';
+    setTimeout(function() {
+      var expected = 'hi\nb\nc\nhello'
 
-    helpers.after(carbon[1], 'processRequest', function() {
-      var contents = fs.readFileSync(this.directory + '/test').toString()
-      assert.equal(contents, expected)
-      done() 
-    })
+      helpers.after(carbon[1], 'processRequest', function() {
+        var contents = fs.readFileSync(this.directory + '/test').toString()
+        assert.equal(contents, expected)
+        done() 
+      })
+
+      fs.writeFile(carbon[0].directory + '/test', 'hi\nb\nc\nd')
+      fs.writeFile(carbon[1].directory + '/test', 'a\nb\nc\nhello')
+    }, 100)
+
   })
-
-  it('resolve merge conflicts', function() {});
 
   afterEach(env.destroy);
 });
